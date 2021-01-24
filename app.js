@@ -3,6 +3,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
+//routes
+const tasks = require('./routes/tasks');
+const boards = require('./routes/boards');
+const users = require('./routes/users');
+
 const { MONGODB } = require("./config");
 
 const port = 5000;
@@ -13,8 +18,13 @@ const enableGlobalErrorLogging =
 app.use(cors());
 
 // Request to be handled as JSON by default
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
+//using routes
+app.use("/api/boards", boards);
+app.use("/api/tasks", tasks);
+app.use("/api/users", users);
 
 app.get("/", (req, res) => {
   res.json({
